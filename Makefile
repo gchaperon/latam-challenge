@@ -19,9 +19,7 @@ venv:			## Create a virtual environment
 
 .PHONY: install
 install:		## Install dependencies
-	pip install -r requirements-dev.txt
-	pip install -r requirements-test.txt
-	pip install -r requirements.txt
+	pip install -e . -c requirements.txt
 
 STRESS_URL = http://127.0.0.1:8000 
 .PHONY: stress-test
@@ -42,4 +40,4 @@ api-test:			## Run tests and coverage
 
 .PHONY: build
 build:			## Build locally the python artifact
-	python setup.py bdist_wheel
+	python setup.py bdist_whee
