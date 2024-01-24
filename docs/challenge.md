@@ -1,7 +1,7 @@
 # Documentation
 
 ## Install
-Run `make install`.
+Run `make install` on a fresh environment (possibly created by running `make venv` or however you like).
 
 ### Dev environment setup
 Setup `pre-commit` hooks to have certainty that your code will pass CI checks. With the project installed run
