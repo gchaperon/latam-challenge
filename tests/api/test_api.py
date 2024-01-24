@@ -5,10 +5,10 @@ from challenge import app
 
 
 class TestBatchPipeline(unittest.TestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.client = TestClient(app)
 
-    def test_should_get_predict(self):
+    def test_should_get_predict(self) -> None:
         data = {
             "flights": [{"OPERA": "Aerolineas Argentinas", "TIPOVUELO": "N", "MES": 3}]
         }
@@ -17,7 +17,7 @@ class TestBatchPipeline(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"predict": [0]})
 
-    def test_should_failed_unkown_column_1(self):
+    def test_should_failed_unkown_column_1(self) -> None:
         data = {
             "flights": [{"OPERA": "Aerolineas Argentinas", "TIPOVUELO": "N", "MES": 13}]
         }
@@ -25,7 +25,7 @@ class TestBatchPipeline(unittest.TestCase):
         response = self.client.post("/predict", json=data)
         self.assertEqual(response.status_code, 400)
 
-    def test_should_failed_unkown_column_2(self):
+    def test_should_failed_unkown_column_2(self) -> None:
         data = {
             "flights": [{"OPERA": "Aerolineas Argentinas", "TIPOVUELO": "O", "MES": 13}]
         }
@@ -33,7 +33,7 @@ class TestBatchPipeline(unittest.TestCase):
         response = self.client.post("/predict", json=data)
         self.assertEqual(response.status_code, 400)
 
-    def test_should_failed_unkown_column_3(self):
+    def test_should_failed_unkown_column_3(self) -> None:
         data = {"flights": [{"OPERA": "Argentinas", "TIPOVUELO": "O", "MES": 13}]}
         # when("xgboost.XGBClassifier").predict(ANY).thenReturn(np.array([0]))
         response = self.client.post("/predict", json=data)
