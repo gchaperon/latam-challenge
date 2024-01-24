@@ -5,6 +5,18 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: v2.9.0
+    hooks:
+      - id: pretty-format-toml
+        args: [--autofix]
+        files: ^.*\.toml$
+      - id: pretty-format-yaml
+        args: [--autofix, --offset, '2']
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.6.1
+    hooks:
+      - id: nbstripout
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # NOTE: remember to keep at the same version as in pyproject.toml (somewhat
     # of a code smell, but oh well)

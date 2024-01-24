@@ -1,18 +1,18 @@
 [build-system]
-requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+requires = ["setuptools"]
 
 [project]
+dependencies = [
+  "fastapi",
+  "pydantic",
+  "uvicorn",
+  "numpy",
+  "pandas[parquet,feather]",
+  "scikit-learn"
+]
 name = "challenge"
 version = "0.0.1"
-dependencies = [
-    "fastapi",
-    "pydantic",
-    "uvicorn",
-    "numpy",
-    "pandas[parquet,feather]",
-    "scikit-learn",
-]
 
 [project.optional-dependencies]
 all = ["challenge[dev,test,types]"]
@@ -20,16 +20,17 @@ dev = ["matplotlib", "seaborn", "xgboost", "pre-commit", "jupyterlab", "ipython"
 test = ["locust", "coverage", "pytest", "pytest-cov", "mockito"]
 types = ["mypy", "pandas-stubs"]
 
-[tool.setuptools]
-packages = ["challenge"]
-
-[tool.ruff]
-extend-include = ["*.ipynb"]
-
 [tool.mypy]
 strict = true
 
 # TODO: Write stubs for these packages
 [[tool.mypy.overrides]]
-module = ["sklearn.metrics", "sklearn.model_selection"]
 ignore_missing_imports = true
+module = ["sklearn.metrics", "sklearn.model_selection"]
+
+[tool.ruff]
+extend-include = ["*.ipynb"]
+extend-select = ["I"]
+
+[tool.setuptools]
+packages = ["challenge"]

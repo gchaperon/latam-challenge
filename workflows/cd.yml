@@ -1,7 +1,5 @@
-name: 'Continuous Delivery'
+name: Continuous Delivery
 
-on:
-  ...
+on: '...'
 
-jobs:
-  ...
+jobs: '...'
