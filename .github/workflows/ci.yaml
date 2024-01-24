@@ -40,7 +40,7 @@ jobs:
         id: filter
         with:
           filters: |
-            backend:
+            challenge:
               - 'challenge/**/*.py'
             tests:
               - 'tests/**/*.py'
@@ -49,12 +49,6 @@ jobs:
     needs: python-changes
     if: ${{ !github.event.pull_request.draft  &&  needs.python-changes.outputs.value }}
     steps:
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            src:
-
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
