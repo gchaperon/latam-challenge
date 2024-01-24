@@ -1,3 +1,4 @@
+# NOTE: This file is not used, but I was instructed to *not* delete any file
 locust~=1.6
 coverage~=5.5
 pytest~=6.2.5

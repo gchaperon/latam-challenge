@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "challenge"
+version = "0.0.1"
+dependencies = [
+    "fastapi",
+    "pydantic",
+    "uvicorn",
+    "numpy",
+    "pandas",
+    "scikit-learn",
+]
+
+[project.optional-dependencies]
+all = ["challenge[dev,test]"]
+dev = ["matplotlib", "seaborn"]
+test = ["locust", "coverage", "pytest", "pytest-cov", "mockito"]
+
+[tool.setuptools]
+packages = ["challenge"]
