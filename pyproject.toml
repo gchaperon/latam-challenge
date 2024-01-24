@@ -10,18 +10,21 @@ dependencies = [
     "pydantic",
     "uvicorn",
     "numpy",
-    "pandas",
+    "pandas[parquet,feather]",
     "scikit-learn",
 ]
 
 [project.optional-dependencies]
 all = ["challenge[dev,test,types]"]
-dev = ["matplotlib", "seaborn", "pre-commit", "jupyterlab", "ipython", "ruff==0.1.14"]
+dev = ["matplotlib", "seaborn", "xgboost", "pre-commit", "jupyterlab", "ipython", "ruff==0.1.14"]
 test = ["locust", "coverage", "pytest", "pytest-cov", "mockito"]
 types = ["mypy", "pandas-stubs"]
 
 [tool.setuptools]
 packages = ["challenge"]
+
+[tool.ruff]
+extend-include = ["*.ipynb"]
 
 [tool.mypy]
 strict = true
