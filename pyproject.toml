@@ -15,9 +15,18 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-all = ["challenge[dev,test]"]
-dev = ["matplotlib", "seaborn", "pre-commit", "jupyterlab", "ipython", "mypy", "ruff==0.1.14"]
+all = ["challenge[dev,test,types]"]
+dev = ["matplotlib", "seaborn", "pre-commit", "jupyterlab", "ipython", "ruff==0.1.14"]
 test = ["locust", "coverage", "pytest", "pytest-cov", "mockito"]
+types = ["mypy", "pandas-stubs"]
 
 [tool.setuptools]
 packages = ["challenge"]
+
+[tool.mypy]
+strict = true
+
+# TODO: Write stubs for these packages
+[[tool.mypy.overrides]]
+module = ["sklearn.metrics", "sklearn.model_selection"]
+ignore_missing_imports = true
