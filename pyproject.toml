@@ -16,7 +16,7 @@ dependencies = [
 
 [project.optional-dependencies]
 all = ["challenge[dev,test]"]
-dev = ["matplotlib", "seaborn"]
+dev = ["matplotlib", "seaborn", "pre-commit", "jupyterlab", "ipython", "mypy", "ruff==0.1.14"]
 test = ["locust", "coverage", "pytest", "pytest-cov", "mockito"]
 
 [tool.setuptools]

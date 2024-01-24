@@ -1,6 +1,19 @@
 # Documentation
 
+## Install
+Run `make install`.
+
+### Dev environment setup
+Setup `pre-commit` hooks to have certainty that your code will pass CI checks. With the project installed run
+```console
+$ pre-commit install
+```
+
 ## Conventions
+
+### Code
+Most (if not all) code conventions should be handled by the lint and formatting rules enforced by `pre-commit`. Make sure yo have installed and configured, see [here](dev-environment-setup)
+
 ### PR naming convention
 All pull request will have a title in the form `[(Part X|Base)] <short
 description>`, to document which part of the challenge the PR is addressing.
