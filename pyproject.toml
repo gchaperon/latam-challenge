@@ -4,13 +4,14 @@ requires = ["setuptools"]
 
 [project]
 dependencies = [
+  "click",
   "fastapi",
-  "pydantic",
-  "uvicorn",
   "numpy",
   "pandas[parquet,feather]",
+  "pydantic",
   "scikit-learn",
-  "typing_extensions"
+  "typing_extensions",
+  "uvicorn"
 ]
 name = "challenge"
 version = "0.0.1"
