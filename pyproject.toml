@@ -18,7 +18,15 @@ version = "0.0.1"
 
 [project.optional-dependencies]
 all = ["challenge[dev,test,types]"]
-dev = ["matplotlib", "seaborn", "xgboost", "pre-commit", "jupyterlab", "ipython", "ruff==0.1.14"]
+dev = [
+  "ipython",
+  "jupyterlab",
+  "matplotlib",
+  "pre-commit",
+  "ruff==0.1.14",
+  "seaborn",
+  "xgboost"
+]
 test = ["locust", "coverage", "pytest", "pytest-cov", "mockito"]
 types = ["mypy", "pandas-stubs"]
 
