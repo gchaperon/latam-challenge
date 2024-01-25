@@ -224,9 +224,11 @@ numpy==1.26.3
     #   matplotlib
     #   pandas
     #   pandas-stubs
+    #   pyarrow
     #   scikit-learn
     #   scipy
     #   seaborn
+    #   xgboost
 overrides==7.6.0
     # via jupyter-server
 packaging==23.2
@@ -275,6 +277,8 @@ ptyprocess==0.7.0
     #   terminado
 pure-eval==0.2.2
     # via stack-data
+pyarrow==15.0.0
+    # via pandas
 pycparser==2.21
     # via cffi
 pydantic==2.5.3
@@ -346,7 +350,9 @@ scikit-learn==1.4.0
     #   challenge
     #   challenge (pyproject.toml)
 scipy==1.12.0
-    # via scikit-learn
+    # via
+    #   scikit-learn
+    #   xgboost
 seaborn==0.13.1
     # via challenge
 send2trash==1.8.2
@@ -431,6 +437,8 @@ werkzeug==3.0.1
     # via
     #   flask
     #   locust
+xgboost==2.0.3
+    # via challenge
 zope-event==5.0
     # via gevent
 zope-interface==6.1
