@@ -42,7 +42,7 @@ module = ["sklearn.metrics", "sklearn.model_selection"]
 [tool.ruff]
 extend-include = ["*.ipynb"]
 extend-select = ["I", "D"]
-ignore = ["D100", "D101"]
+ignore = ["D100", "D101", "D104"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["D"]
