@@ -1,9 +1,22 @@
+# misc stuff
 /challenge_MLE.zip
-/tags*
+
+# virtualenvs
 /.venv
 /env
+
+# python packaging stuff
 __pycache__/
 *.egg-info/
 /build
-/.vimrc
+
+# jupyter stuff
 .ipynb_checkpoints/
+
+# editor stuff
+/.vimrc
+/tags*
+
+# testing stuff
+/.coverage
+/reports/

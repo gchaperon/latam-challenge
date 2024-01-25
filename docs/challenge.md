@@ -1,20 +1,53 @@
 # Documentation
 
 ## Install
-Run `make install` on a fresh environment (possibly created by running `make venv` or however you like).
+Run `make install` on a fresh environment (possibly created by running `make
+venv` or however you like).
 
 ### Dev environment setup
-Setup `pre-commit` hooks to have certainty that your code will pass CI checks. With the project installed run
+Setup `pre-commit` hooks to have certainty that your code will pass CI checks.
+With the project installed run
 ```console
 $ pre-commit install
+```
+## Model migration
+### Selection rationale
+I choose the `LogisticRegression` model (with most important features and class
+balance), because I belive in the [Occam's
+razor](https://en.wikipedia.org/wiki/Occam%27s_razor) principle (a fancy way of
+saying simpler is better).
+
+### Training CLI
+I have build a simple CLI to train a new model and store in the `checkpoints`
+directory. This should help when new models need to be trained in a
+standardized pipeline, and also when loading checkpoints for inference.
+
+The CLI can be invoked with running `python -m challenge train <options>`, with
+the package properly installed (see [Install](install).
+
+Here is the synopsis for the command.
+```console
+$ python -m challenge train --help
+Usage: python -m challenge train [OPTIONS]
+
+  Command to train the model using a data source.
+
+  The command trains the model and saves a checkpoint to the ``checkpoints``
+  directory.
+
+  Args:     data_file: The data file with features for training.
+
+Options:
+  --data-file FILE  [required]
+  --help            Show this message and exit.
 ```
 
 ## Conventions
 
 ### Code
 Most (if not all) code conventions should be handled by the lint and formatting
-rules enforced by `pre-commit`. Make sure yo have installed and configured,
-see [here](dev-environment-setup).
+rules provided by `ruff` and enforced by `pre-commit`. Make sure yo have
+installed and configured, see [here](dev-environment-setup).
 
 ### PR naming convention
 All pull request will have a title in the form `[(Part X|Base)] <short

@@ -48,7 +48,7 @@ jobs:
   types:
     runs-on: ubuntu-latest
     needs: python-changes
-    if: ${{ !github.event.pull_request.draft  &&  needs.python-changes.outputs.value }}
+    if: ${{ !github.event.pull_request.draft  &&  needs.python-changes.outputs.value == 'true' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -59,3 +59,17 @@ jobs:
         run: pip install '.[test,types]' -c requirements.txt
       - name: Run Mypy
         run: mypy challenge tests
+  tests:
+    runs-on: ubuntu-latest
+    needs: python-changes
+    if: ${{ !github.event.pull_request.draft  &&  needs.python-changes.outputs.value == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.11.x
+          cache: pip
+      - name: Install packages
+        run: pip install -e '.[test]' -c requirements.txt
+      - name: Run model tests
+        run: make model-test

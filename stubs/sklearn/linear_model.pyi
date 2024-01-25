@@ -1,0 +1,13 @@
+import typing as tp
+
+import numpy as np
+import numpy.typing as npt
+import pandas as pd
+
+class LogisticRegression:
+    def __init__(
+        self, class_weight: dict[tp.Any, float] | tp.Literal["balanced"] | None = None
+    ) -> None: ...
+    def predict(self, features: pd.DataFrame) -> npt.NDArray[np.int_]: ...
+    def set_params(self, **kwargs: tp.Any) -> tp.Self: ...
+    def fit(self, X: pd.DataFrame, y: pd.Series[tp.Any]) -> tp.Self: ...
