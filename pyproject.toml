@@ -9,7 +9,8 @@ dependencies = [
   "uvicorn",
   "numpy",
   "pandas[parquet,feather]",
-  "scikit-learn"
+  "scikit-learn",
+  "typing_extensions"
 ]
 name = "challenge"
 version = "0.0.1"
@@ -21,6 +22,7 @@ test = ["locust", "coverage", "pytest", "pytest-cov", "mockito"]
 types = ["mypy", "pandas-stubs"]
 
 [tool.mypy]
+mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
 strict = true
 
 # TODO: Write stubs for these packages
@@ -30,7 +32,14 @@ module = ["sklearn.metrics", "sklearn.model_selection"]
 
 [tool.ruff]
 extend-include = ["*.ipynb"]
-extend-select = ["I"]
+extend-select = ["I", "D"]
+ignore = ["D100", "D101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.setuptools]
 packages = ["challenge"]

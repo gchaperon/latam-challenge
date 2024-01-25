@@ -1,10 +1,18 @@
 # Documentation
 
+## Model selection rationale
+I choose the `LogisticRegression` model (with most important features and class
+balance), because I belive in the [Occam's
+razor](https://en.wikipedia.org/wiki/Occam%27s_razor) principle (a fancy way of
+saying simpler is better).
+
 ## Install
-Run `make install` on a fresh environment (possibly created by running `make venv` or however you like).
+Run `make install` on a fresh environment (possibly created by running `make
+venv` or however you like).
 
 ### Dev environment setup
-Setup `pre-commit` hooks to have certainty that your code will pass CI checks. With the project installed run
+Setup `pre-commit` hooks to have certainty that your code will pass CI checks.
+With the project installed run
 ```console
 $ pre-commit install
 ```
@@ -13,8 +21,8 @@ $ pre-commit install
 
 ### Code
 Most (if not all) code conventions should be handled by the lint and formatting
-rules enforced by `pre-commit`. Make sure yo have installed and configured,
-see [here](dev-environment-setup).
+rules provided by `ruff` and enforced by `pre-commit`. Make sure yo have
+installed and configured, see [here](dev-environment-setup).
 
 ### PR naming convention
 All pull request will have a title in the form `[(Part X|Base)] <short
