@@ -151,4 +151,9 @@ def custom_openapi() -> dict[str, tp.Any]:
     return app.openapi_schema
 
 
-app.openapi = custom_openapi
+# NOTE: on ignore[method-assign];  asigning methods _is_ possible, but frawned
+# upon. Mypy catches the code smell, but I am allowing it here because it's the
+# recommended way of customizing the OpenAPI documentation. See
+# [here](https://fastapi.tiangolo.com/how-to/extending-openapi/) for more
+# details.
+app.openapi = custom_openapi  # type: ignore[method-assign]
