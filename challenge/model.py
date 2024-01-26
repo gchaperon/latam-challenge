@@ -116,7 +116,6 @@ class DelayModel:
             or
             pd.DataFrame: features.
         """
-        data["delay"] = data.apply(_compute_delay, axis="columns")
         features = pd.concat(
             [
                 pd.get_dummies(data["OPERA"], prefix="OPERA"),
@@ -126,8 +125,10 @@ class DelayModel:
             axis=1,
         )
 
-        X = features[self._TOP_10_FEATURES]
         if target_column:
+            # If this preprocess call is for training
+            X = features[self._TOP_10_FEATURES]
+            data["delay"] = data.apply(_compute_delay, axis="columns")
             y = data[target_column]
             n_y0 = len(y[y == 0])
             n_y1 = len(y[y == 1])
@@ -135,6 +136,12 @@ class DelayModel:
             self._class_weight = {1: n_y0 / len(y), 0: n_y1 / len(y)}
             return X, pd.DataFrame({y.name: y})
         else:
+            # If this preprocess call is for inference
+            X = pd.DataFrame(
+                False, index=range(len(data)), columns=self._TOP_10_FEATURES
+            )
+            common_columns = list(set(features.columns) & set(self._TOP_10_FEATURES))
+            X[common_columns] = features[common_columns]
             return X
 
     def fit(self, features: pd.DataFrame, target: pd.DataFrame) -> None:
