@@ -81,12 +81,6 @@ async def post_predict(payload: PredictionPayload) -> PredictionResponse:
     Receives a prediction payload in the format defined by
     ``PredictionPayload``, converts to features each item in the body and
     passes it trough ``DelayModel.predict``. Return the predictions as a list.
-
-    Args:
-        payload: The prediction payload.
-
-    Returns:
-        PredictionResponse: A prediction for each item in the payload.
     """
     model = _lazy_model()
     features = model.preprocess(
@@ -133,3 +127,28 @@ def _lazy_model() -> DelayModel:
     running expensive code at module initialization time.
     """
     return DelayModel()
+
+
+def custom_openapi() -> dict[str, tp.Any]:
+    """Comfigure a custom OpenAPI schema.
+
+    This function changes the response code 422 for a response code 400, to
+    match the ValidationError configured for this app.
+
+    Returns:
+        dict[str, tp.Any]: The altered OpenAPI schema.
+    """
+    openapi_schema = fastapi.openapi.utils.get_openapi(
+        title="Latam Challenge",
+        version="0.0.1",
+        summary="Predict delays given flight data.",
+        routes=app.routes,
+    )
+    responses = openapi_schema["paths"]["/predict"]["post"]["responses"]
+    responses["400"] = responses["422"]
+    del responses["422"]
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
