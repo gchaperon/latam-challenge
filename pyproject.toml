@@ -10,7 +10,6 @@ dependencies = [
   "pandas[parquet,feather]",
   "pydantic",
   "scikit-learn",
-  "typing_extensions",
   "uvicorn"
 ]
 name = "challenge"
@@ -27,7 +26,7 @@ dev = [
   "seaborn",
   "xgboost"
 ]
-test = ["locust", "coverage", "pytest", "pytest-cov", "mockito"]
+test = ["locust", "coverage", "pytest", "pytest-cov", "mockito", "httpx"]
 types = ["mypy", "pandas-stubs"]
 
 [tool.mypy]
