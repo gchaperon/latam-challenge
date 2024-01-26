@@ -73,3 +73,5 @@ jobs:
         run: pip install -e '.[test]' -c requirements.txt
       - name: Run model tests
         run: make model-test
+      - name: Run api tests
+        run: make api-test
