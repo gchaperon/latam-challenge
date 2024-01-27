@@ -14,6 +14,7 @@ terraform {
 
 locals {
   gcp_project_id = "latam-challenge-412300"
+  image_name = "latam-challenge"
 }
 
 provider "google" {

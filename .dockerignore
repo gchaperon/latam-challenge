@@ -1,0 +1,8 @@
+*
+!challenge/
+!checkpoints/
+!requirements.txt
+!pyproject.toml
+**/.ipynb_checkpoints
+**/__pycache__
+**/*.ipynb
