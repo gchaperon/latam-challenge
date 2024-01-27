@@ -18,6 +18,18 @@ $ terraform -chdir=infra init
 Validate the intialization by running `terraform -chdir=infra output app_uri`.
 It should show the URI of the deployed app.
 
+### Testing
+Model and API tests are run with the following
+```console
+$ make model-test
+$ make api-test
+```
+
+The API can be run locally with
+```console
+$ uvicorn challenge:app --reload
+```
+
 ## Model migration
 ### Selection rationale
 I choose the `LogisticRegression` model (with most important features and class
