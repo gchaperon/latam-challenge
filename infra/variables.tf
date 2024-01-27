@@ -1,5 +1,5 @@
-variable "docker_image" {
+variable "docker_tag" {
   type = string
-  default = "us-docker.pkg.dev/cloudrun/container/hello"
-  description = "The image to deploy using Cloud Run"
+  default = null
+  description = "The tag of the image to deploy to Cloud Run"
 }

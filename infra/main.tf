@@ -15,6 +15,19 @@ terraform {
 locals {
   gcp_project_id = "latam-challenge-412300"
   image_name = "latam-challenge"
+  default_image = "us-docker.pkg.dev/cloudrun/container/hello"
+}
+locals {
+  docker_image_base = join("/", [
+    "${google_artifact_registry_repository.challenge_repo.location}-docker.pkg.dev",
+    local.gcp_project_id,
+    google_artifact_registry_repository.challenge_repo.repository_id,
+    local.image_name,
+  ])
+}
+
+locals {
+  docker_image = var.docker_tag == null ? local.default_image : "${local.docker_image_base}:${var.docker_tag}"
 }
 
 provider "google" {
@@ -38,8 +51,13 @@ resource "google_cloud_run_v2_service" "default" {
   ingress  = "INGRESS_TRAFFIC_ALL"
 
   template {
+    scaling {
+      max_instance_count = 10
+      min_instance_count = 1
+    }
+
     containers {
-      image = var.docker_image
+      image = local.docker_image
     }
   }
 }

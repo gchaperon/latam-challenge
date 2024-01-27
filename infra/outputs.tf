@@ -10,11 +10,14 @@ output "docker_repository_id" {
   value = google_artifact_registry_repository.challenge_repo.repository_id
 }
 
+output "docker_image_name" {
+  value = local.image_name
+}
+
 output "docker_tag_base" {
-  value = join("/", [
-    "${google_artifact_registry_repository.challenge_repo.location}-docker.pkg.dev",
-    local.gcp_project_id,
-    google_artifact_registry_repository.challenge_repo.repository_id,
-    local.image_name,
-  ])
+  value = local.docker_image_base
+}
+
+output "app_uri" {
+  value = google_cloud_run_v2_service.default.uri
 }
