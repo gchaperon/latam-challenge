@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !github.event.pull_request.draft }}
     outputs:
-      value: ${{ steps.filter.outputs.challenge || steps.filter.outputs.tests }}
+      value: ${{ steps.filter.outputs.challenge || steps.filter.outputs.tests || steps.filter.outputs.scripts}}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
@@ -45,6 +45,8 @@ jobs:
               - 'challenge/**/*.py'
             tests:
               - 'tests/**/*.py'
+            scripts:
+              - 'scripts/**/*.py'
   types:
     runs-on: ubuntu-latest
     needs: python-changes
@@ -58,7 +60,7 @@ jobs:
       - name: Install Mypy
         run: pip install '.[test,types]' -c requirements.txt
       - name: Run Mypy
-        run: mypy challenge tests
+        run: mypy challenge tests scripts
   tests:
     runs-on: ubuntu-latest
     needs: python-changes

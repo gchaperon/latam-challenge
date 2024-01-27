@@ -10,6 +10,26 @@ With the project installed run
 ```console
 $ pre-commit install
 ```
+
+Setup `terraform`. Run
+```console
+$ terraform -chdir=infra init
+```
+Validate the intialization by running `terraform -chdir=infra output app_uri`.
+It should show the URI of the deployed app.
+
+### Testing
+Model and API tests are run with the following
+```console
+$ make model-test
+$ make api-test
+```
+
+The API can be run locally with
+```console
+$ uvicorn challenge:app --reload
+```
+
 ## Model migration
 ### Selection rationale
 I choose the `LogisticRegression` model (with most important features and class
@@ -41,6 +61,27 @@ Options:
   --data-file FILE  [required]
   --help            Show this message and exit.
 ```
+
+## Deployment Instructions
+Requieres a functional `gcloud` and `docker` installation.
+
+1. Set up the infraestructure to hold the Docker images. Run `terraform
+   -chdir=infra apply`.
+2. Configure Docker to use the Artifacts Registry. Run `gcloud auth
+   configure-docker $(terraform -chdir=infra output -raw
+   docker_repository_location)-docker.pkg.dev`
+3. Create image and push. Run
+   ```console
+   $ FULL_TAG=$(terraform -chdir=infra output -raw docker_tag_base):$(python scripts/deploy_utils.py image_tag)
+   $ docker build -t $FULL_TAG .
+   $ docker push $FULL_TAG
+   ```
+4. Deploy using Terraform. Run `terraform -chdir=infra apply
+   -var="docker_tag=$TAG"`.
+
+The deployed URI can be checked using `terraform -chdir=infra output app_uri`.
+Ping it [here](https://latam-challenge-ubomd35csa-uc.a.run.app/) or check the
+API docs [here](https://latam-challenge-ubomd35csa-uc.a.run.app/docs/)
 
 ## Conventions
 

@@ -1,0 +1,10 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files, might contain secrets
+*.tfstate
+*.tfstate.*
+
+
+# tfvars files, recommended place to put secrets
+*.tfvars
