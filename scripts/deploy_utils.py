@@ -24,7 +24,7 @@ def image_tag() -> None:
     print(m.hexdigest()[:16])
 
 
-def tag_is_available(tag: str, location: str, repository: str, package: str) -> None:
+def is_tag_available(tag: str, location: str, repository: str, package: str) -> None:
     """Find if the given tag is available in Google Artifacts Registry.
 
     This command exits succesfully if the tag is available, and return an error
@@ -73,12 +73,12 @@ if __name__ == "__main__":
     parser_image_tag = subparsers.add_parser("image_tag")
     parser_image_tag.set_defaults(func=image_tag)
 
-    parser_tag_is_available = subparsers.add_parser("tag_is_available")
-    parser_tag_is_available.add_argument("tag")
-    parser_tag_is_available.add_argument("--location", required=True)
-    parser_tag_is_available.add_argument("--repository", required=True)
-    parser_tag_is_available.add_argument("--package", required=True)
-    parser_tag_is_available.set_defaults(func=tag_is_available)
+    parser_is_tag_available = subparsers.add_parser("is_tag_available")
+    parser_is_tag_available.add_argument("tag")
+    parser_is_tag_available.add_argument("--location", required=True)
+    parser_is_tag_available.add_argument("--repository", required=True)
+    parser_is_tag_available.add_argument("--package", required=True)
+    parser_is_tag_available.set_defaults(func=is_tag_available)
 
     args = parser.parse_args()
     args.func(**{k: v for k, v in vars(args).items() if k != "func"})
