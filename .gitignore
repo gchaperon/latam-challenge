@@ -20,3 +20,6 @@ __pycache__/
 # testing stuff
 /.coverage
 /reports/
+
+# GCP stuff
+latam-challenge-412300-*.json
