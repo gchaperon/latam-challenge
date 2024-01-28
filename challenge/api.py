@@ -74,12 +74,6 @@ async def get_health() -> HealthReturn:
     return HealthReturn(status="OK")
 
 
-@app.get("/cd_test", status_code=200)
-async def cd_test() -> HealthReturn:
-    """Simple health enpoint."""
-    return HealthReturn(status="OK")
-
-
 @app.post("/predict", status_code=200)
 async def post_predict(payload: PredictionPayload) -> PredictionResponse:
     """Prediction endpoint.
