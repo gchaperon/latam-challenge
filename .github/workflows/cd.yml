@@ -9,14 +9,15 @@ on:
       - main
 
 jobs:
-  tag:
+  build:
     runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.image_tag.outputs.value }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: 3.11.x
-          cache: pip
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
@@ -33,30 +34,23 @@ jobs:
           registry: ${{ fromJson(steps.tfout.outputs.stdout).docker_repository_location.value }}-docker.pkg.dev
           username: _json_key
           password: ${{ secrets.GOOGLE_CREDENTIALS }}
-      - name: Check python
+      - name: Compute image tag
         id: image_tag
         run: |
           TAG=$(python scripts/deploy_utils.py image_tag)
           echo $TAG
           # echo "value=$TAG" >> $GITHUB_OUTPUT
           echo "value=$(date +%s%N)" >> $GITHUB_OUTPUT
-      - name: Check state (sanity check)
-        run: terraform -chdir=infra state list
-      - name: Check docker
-        run: docker run hello-world
-      - name: Try out terraform output
-        run: |
-          echo ${{ fromJson(steps.tfout.outputs.stdout).app_uri.value }}
-          echo ${{ fromJson(steps.tfout.outputs.stdout).docker_tag_base.value }}
-      - name: Checkif tag is available
+      - name: Check if tag is available
         id: is_tag_available
         continue-on-error: true
         run: |
-          python scripts/deploy_utils.py is_tag_available ${{ steps.image_tag.outputs.value }} \
+          python scripts/deploy_utils.py is_tag_available $TAG \
             --location $LOCATION \
             --repository $REPOSITORY \
             --package $PACKAGE
         env:
+          TAG: ${{ steps.image_tag.outputs.value }}
           LOCATION: ${{ fromJson(steps.tfout.outputs.stdout).docker_repository_location.value }}
           REPOSITORY: ${{ fromJson(steps.tfout.outputs.stdout).docker_repository_id.value }}
           PACKAGE: ${{ fromJson(steps.tfout.outputs.stdout).docker_image_name.value }}
@@ -64,5 +58,22 @@ jobs:
         if: ${{ steps.is_tag_available.outcome == 'success' }}
         uses: docker/build-push-action@v5
         with:
+          context: .
           push: true
           tags: ${{ fromJson(steps.tfout.outputs.stdout).docker_tag_base.value }}:${{ steps.image_tag.outputs.value }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+      - uses: hashicorp/setup-terraform@v3
+      - name: Initialize terraform
+        run: terraform -chdir=infra init
+      - name: Deploy
+        run: terraform -chdir=infra apply -auto-approve -var="docker_tag=$TAG"
+        env:
+          TAG: ${{ needs.build.outputs.image_tag }}
