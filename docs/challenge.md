@@ -98,6 +98,12 @@ image deployment are applied.
 If Terraform is asked to "redeploy" the current image, no expensive operation
 will be performed because the configuration will match the state exactly.
 
+**Triggers**: CD is only configured to run on push to the main branch.
+Conceptually this could be described as "if tests pass, it goes to production".
+This might not be ideal in many situations, specially if integration tests are
+present, or there is a QA team that need to validate new features. For this
+application (a relatively small job challenge) i'm keeping it simple.
+
 
 ## Conventions
 
