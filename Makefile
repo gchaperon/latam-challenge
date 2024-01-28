@@ -21,7 +21,7 @@ venv:			## Create a virtual environment
 install:		## Install dependencies
 	pip install -e . -c requirements.txt
 
-STRESS_URL = http://127.0.0.1:8000
+STRESS_URL = https://latam-challenge-ubomd35csa-uc.a.run.app
 .PHONY: stress-test
 stress-test:
 	# change stress url to your deployed app
