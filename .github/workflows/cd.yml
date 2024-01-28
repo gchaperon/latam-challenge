@@ -39,8 +39,7 @@ jobs:
         run: |
           TAG=$(python scripts/deploy_utils.py image_tag)
           echo $TAG
-          # echo "value=$TAG" >> $GITHUB_OUTPUT
-          echo "value=$(date +%s%N)" >> $GITHUB_OUTPUT
+          echo "value=$TAG" >> $GITHUB_OUTPUT
       - name: Check if tag is available
         id: is_tag_available
         continue-on-error: true
