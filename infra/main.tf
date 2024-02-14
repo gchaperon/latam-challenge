@@ -53,7 +53,7 @@ resource "google_cloud_run_v2_service" "default" {
   template {
     scaling {
       max_instance_count = 10
-      min_instance_count = 1
+      min_instance_count = 0
     }
 
     containers {
