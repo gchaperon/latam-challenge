@@ -1,23 +1,19 @@
-output "gcp_project" {
-  value = local.gcp_project_id
-}
-
 output "docker_repository_location" {
-  value = google_artifact_registry_repository.challenge_repo.location
+  value = module.latam-challenge[0].docker_repository_location
 }
 
 output "docker_repository_id" {
-  value = google_artifact_registry_repository.challenge_repo.repository_id
+  value = module.latam-challenge[0].docker_repository_id
 }
 
 output "docker_image_name" {
-  value = local.image_name
+  value = module.latam-challenge[0].docker_image_name
 }
 
 output "docker_tag_base" {
-  value = local.docker_image_base
+  value = module.latam-challenge[0].docker_tag_base
 }
 
 output "app_uri" {
-  value = google_cloud_run_v2_service.default.uri
+  value = module.latam-challenge[0].app_uri
 }
